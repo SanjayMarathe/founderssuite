@@ -2,13 +2,13 @@ import { AlertTriangle, CheckCircle, XCircle, Info, TrendingUp, TrendingDown } f
 
 const severityConfig = {
   critical: { color: 'text-red-400 bg-red-950/50 border-red-900', icon: XCircle },
-  high: { color: 'text-orange-400 bg-orange-950/50 border-orange-900', icon: AlertTriangle },
-  medium: { color: 'text-yellow-400 bg-yellow-950/50 border-yellow-900', icon: AlertTriangle },
+  high: { color: 'text-brand-400 bg-brand-900/30 border-brand-700', icon: AlertTriangle },
+  medium: { color: 'text-blue-300 bg-blue-950/30 border-blue-800', icon: AlertTriangle },
   low: { color: 'text-blue-400 bg-blue-950/50 border-blue-900', icon: Info },
 }
 
 function ScoreBadge({ score, label }) {
-  const color = score >= 75 ? 'text-green-400' : score >= 50 ? 'text-yellow-400' : 'text-red-400'
+  const color = score >= 75 ? 'text-brand-400' : score >= 50 ? 'text-blue-300' : 'text-red-400'
   return (
     <div className="text-center">
       <div className={`text-4xl font-bold ${color}`}>{score}</div>
@@ -89,7 +89,7 @@ export function BetaTestResults({ result }) {
       {/* Observations */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
-          <Section title="Friction Points" items={result.friction_points} icon={AlertTriangle} itemColor="text-orange-300" />
+          <Section title="Friction Points" items={result.friction_points} icon={AlertTriangle} itemColor="text-brand-400" />
           <Section title="UX Observations" items={result.ux_observations} icon={Info} itemColor="text-gray-300" />
         </div>
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
@@ -152,7 +152,7 @@ export function CompetitorResults({ result }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
           <Section title="Where You Win" items={result.where_you_win} icon={TrendingUp} itemColor="text-green-300" />
-          <Section title="Wording Issues" items={result.wording_issues} icon={AlertTriangle} itemColor="text-yellow-300" />
+          <Section title="Wording Issues" items={result.wording_issues} icon={AlertTriangle} itemColor="text-blue-300" />
         </div>
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
           <Section title="Where You Lose" items={result.where_you_lose} icon={TrendingDown} itemColor="text-red-300" />
@@ -167,7 +167,7 @@ function StatusDot({ status }) {
   const config = {
     present: 'bg-green-500 text-green-400',
     missing: 'bg-red-500 text-red-400',
-    partial: 'bg-yellow-500 text-yellow-400',
+    partial: 'bg-brand-500 text-brand-400',
   }
   const labels = { present: '✓', missing: '✗', partial: '~' }
   const cfg = config[status] || config.missing

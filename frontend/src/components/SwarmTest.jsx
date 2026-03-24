@@ -5,12 +5,12 @@ import MasterLog from './MasterLog'
 import { Zap, Plus, Trash2, Eye, EyeOff, Play } from 'lucide-react'
 
 const PERSONA_COLORS = [
-  'border-purple-500 bg-purple-500/10',
-  'border-blue-500 bg-blue-500/10',
-  'border-green-500 bg-green-500/10',
-  'border-orange-500 bg-orange-500/10',
-  'border-pink-500 bg-pink-500/10',
-  'border-yellow-500 bg-yellow-500/10',
+  'border-brand-500 bg-brand-500/10',
+  'border-blue-400 bg-blue-400/10',
+  'border-sky-500 bg-sky-500/10',
+  'border-brand-600 bg-brand-600/10',
+  'border-cyan-500 bg-cyan-500/10',
+  'border-blue-300 bg-blue-300/10',
 ]
 
 export default function SwarmTest() {
@@ -74,7 +74,7 @@ export default function SwarmTest() {
     <div className="max-w-6xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-          <Zap size={28} className="text-yellow-400" /> Swarm Test
+          <Zap size={28} className="text-brand-400" /> Swarm Test
         </h1>
         <p className="text-gray-400">
           Launch multiple AI agents simultaneously — each with a different persona — all testing your app at once.
@@ -196,7 +196,7 @@ export default function SwarmTest() {
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Zap size={18} className="text-yellow-400" /> Swarm Running — {jobIds.length} Agents
+              <Zap size={18} className="text-brand-400" /> Swarm Running — {jobIds.length} Agents
             </h2>
             <button
               onClick={() => { setSwarmId(null); setJobIds([]) }}

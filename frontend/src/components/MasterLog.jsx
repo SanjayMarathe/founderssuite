@@ -2,20 +2,20 @@ import { useEffect, useRef, useState } from 'react'
 import { connectJobWS } from '../api/client'
 import { Terminal } from 'lucide-react'
 
-// One distinct terminal color per agent index
+// Distinct shades of blue per agent
 const AGENT_COLORS = [
-  'text-purple-400',
-  'text-blue-400',
-  'text-green-400',
-  'text-orange-400',
-  'text-pink-400',
-  'text-yellow-400',
+  'text-brand-400',
+  'text-blue-300',
+  'text-sky-400',
+  'text-brand-600',
+  'text-cyan-400',
+  'text-blue-200',
 ]
 
 const STATUS_COLOR = {
-  completed: 'text-green-500',
+  completed: 'text-brand-400',
   failed:    'text-red-500',
-  running:   'text-cyan-400',
+  running:   'text-brand-500',
   pending:   'text-gray-500',
 }
 

@@ -37,7 +37,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
   const iconColor = !status ? 'text-gray-600'
     : status.status === 'completed' ? 'text-green-400'
     : status.status === 'failed' ? 'text-red-400'
-    : 'text-yellow-400'
+    : 'text-brand-400'
 
   const result = status?.result
 
@@ -52,7 +52,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
             <div className="text-xs text-gray-400 truncate">{personaName}</div>
           </div>
           {result && (
-            <div className={`text-xl font-bold ${result.overall_score >= 75 ? 'text-green-400' : result.overall_score >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
+            <div className={`text-xl font-bold ${result.overall_score >= 75 ? 'text-green-400' : result.overall_score >= 50 ? 'text-brand-400' : 'text-red-400'}`}>
               {result.overall_score}
             </div>
           )}
@@ -61,7 +61,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
         {/* Progress bar */}
         <div className="w-full bg-gray-800/60 rounded-full h-1 mb-3">
           <div
-            className="bg-yellow-400 h-1 rounded-full transition-all duration-300"
+            className="bg-brand-500 h-1 rounded-full transition-all duration-300"
             style={{ width: `${status?.progress || 0}%` }}
           />
         </div>
@@ -124,7 +124,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
               {entry}
             </div>
           ))}
-          {status?.status === 'running' && <div className="text-yellow-500 animate-pulse">▌</div>}
+          {status?.status === 'running' && <div className="text-brand-500 animate-pulse">▌</div>}
         </div>
       )}
 
@@ -152,7 +152,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
                   <div className="text-xs font-semibold text-gray-500 uppercase mb-1">Bugs</div>
                   {result.bugs_found.slice(0, 3).map((b, i) => (
                     <div key={i} className="text-xs text-gray-300 mb-1 flex gap-1.5">
-                      <span className={`flex-shrink-0 font-bold ${b.severity === 'critical' ? 'text-red-400' : b.severity === 'high' ? 'text-orange-400' : 'text-yellow-400'}`}>
+                      <span className={`flex-shrink-0 font-bold ${b.severity === 'critical' ? 'text-red-400' : b.severity === 'high' ? 'text-brand-400' : 'text-brand-400'}`}>
                         [{b.severity}]
                       </span>
                       <span className="truncate">{b.description}</span>
@@ -166,7 +166,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
                   <div className="text-xs font-semibold text-gray-500 uppercase mb-1">Friction</div>
                   {result.friction_points.slice(0, 3).map((f, i) => (
                     <div key={i} className="text-xs text-gray-400 mb-0.5 flex gap-1.5">
-                      <span className="text-orange-400">·</span> {f}
+                      <span className="text-brand-400">·</span> {f}
                     </div>
                   ))}
                 </div>
