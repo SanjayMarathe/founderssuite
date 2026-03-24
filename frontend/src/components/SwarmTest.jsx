@@ -119,7 +119,7 @@ export default function SwarmTest() {
                   onClick={() => setShowBrowsers(p => !p)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium transition-all ${
                     showBrowsers
-                      ? 'border-green-500 bg-green-500/10 text-green-400'
+                      ? 'border-brand-500 bg-brand-500/10 text-brand-400'
                       : 'border-gray-700 bg-gray-800 text-gray-400'
                   }`}
                 >

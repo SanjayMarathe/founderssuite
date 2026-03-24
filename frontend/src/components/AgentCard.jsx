@@ -35,7 +35,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
     : Loader2
 
   const iconColor = !status ? 'text-gray-600'
-    : status.status === 'completed' ? 'text-green-400'
+    : status.status === 'completed' ? 'text-brand-400'
     : status.status === 'failed' ? 'text-red-400'
     : 'text-brand-400'
 
@@ -52,7 +52,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
             <div className="text-xs text-gray-400 truncate">{personaName}</div>
           </div>
           {result && (
-            <div className={`text-xl font-bold ${result.overall_score >= 75 ? 'text-green-400' : result.overall_score >= 50 ? 'text-brand-400' : 'text-red-400'}`}>
+            <div className={`text-xl font-bold ${result.overall_score >= 75 ? 'text-brand-400' : result.overall_score >= 50 ? 'text-brand-400' : 'text-red-400'}`}>
               {result.overall_score}
             </div>
           )}
@@ -177,7 +177,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
                   <div className="text-xs font-semibold text-gray-500 uppercase mb-1">What Works</div>
                   {result.positive_findings.slice(0, 2).map((f, i) => (
                     <div key={i} className="text-xs text-gray-400 mb-0.5 flex gap-1.5">
-                      <span className="text-green-400">·</span> {f}
+                      <span className="text-brand-400">·</span> {f}
                     </div>
                   ))}
                 </div>

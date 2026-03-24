@@ -43,7 +43,7 @@ export default function LiveFeed({ jobId, onComplete }) {
     : Loader2
 
   const iconColor = status.status === 'completed'
-    ? 'text-green-400'
+    ? 'text-brand-400'
     : status.status === 'failed'
     ? 'text-red-400'
     : 'text-brand-400'

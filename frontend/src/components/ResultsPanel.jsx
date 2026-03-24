@@ -93,7 +93,7 @@ export function BetaTestResults({ result }) {
           <Section title="UX Observations" items={result.ux_observations} icon={Info} itemColor="text-gray-300" />
         </div>
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
-          <Section title="What Works Well" items={result.positive_findings} icon={CheckCircle} itemColor="text-green-300" />
+          <Section title="What Works Well" items={result.positive_findings} icon={CheckCircle} itemColor="text-brand-300" />
         </div>
       </div>
     </div>
@@ -151,7 +151,7 @@ export function CompetitorResults({ result }) {
       {/* Win/Lose */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
-          <Section title="Where You Win" items={result.where_you_win} icon={TrendingUp} itemColor="text-green-300" />
+          <Section title="Where You Win" items={result.where_you_win} icon={TrendingUp} itemColor="text-brand-300" />
           <Section title="Wording Issues" items={result.wording_issues} icon={AlertTriangle} itemColor="text-blue-300" />
         </div>
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4">
@@ -165,7 +165,7 @@ export function CompetitorResults({ result }) {
 
 function StatusDot({ status }) {
   const config = {
-    present: 'bg-green-500 text-green-400',
+    present: 'bg-brand-500 text-brand-400',
     missing: 'bg-red-500 text-red-400',
     partial: 'bg-brand-500 text-brand-400',
   }

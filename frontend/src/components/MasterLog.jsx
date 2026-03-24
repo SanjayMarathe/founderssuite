@@ -62,7 +62,7 @@ export default function MasterLog({ jobIds, agentLabels }) {
     <div className="mt-6 bg-gray-950 border border-gray-800 rounded-xl overflow-hidden">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-2.5 border-b border-gray-800 bg-gray-900">
-        <Terminal size={14} className="text-green-400" />
+        <Terminal size={14} className="text-brand-400" />
         <span className="text-xs font-mono font-semibold text-gray-400 uppercase tracking-wider">Master Log</span>
         <span className="ml-auto text-xs text-gray-600">{lines.length} events</span>
         {/* Legend */}
@@ -90,7 +90,7 @@ export default function MasterLog({ jobIds, agentLabels }) {
             </span>
             {/* Status badge on terminal events */}
             {(line.text === 'Done' || line.status === 'completed') && (
-              <span className="text-green-500 flex-shrink-0">✓</span>
+              <span className="text-brand-500 flex-shrink-0">✓</span>
             )}
             {line.status === 'failed' && (
               <span className="text-red-500 flex-shrink-0">✗</span>
