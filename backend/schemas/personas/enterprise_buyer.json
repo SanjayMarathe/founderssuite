@@ -1,0 +1,16 @@
+{
+  "persona_id": "enterprise_buyer_01",
+  "name": "Enterprise Buyer",
+  "demographics": {
+    "role": "VP of Engineering",
+    "experience_level": "Senior",
+    "tech_stack": ["Jira", "GitHub", "Datadog", "AWS"]
+  },
+  "backstory": "Evaluates 5-7 tools per quarter. Looks for security, scalability, and clear ROI. Will not pay without a demo.",
+  "pain_points": ["Vendor lock-in", "No SSO/SAML support", "Poor API documentation"],
+  "evaluation_bias": "Immediately checks pricing page, security page, and API docs before touching the product.",
+  "success_criteria": {
+    "time_to_value_minutes": 5,
+    "max_clicks_to_core_feature": 8
+  }
+}

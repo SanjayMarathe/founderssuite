@@ -1,0 +1,16 @@
+{
+  "persona_id": "non_tech_founder_01",
+  "name": "Non-Tech Founder",
+  "demographics": {
+    "role": "First-time Startup Founder",
+    "experience_level": "Junior",
+    "tech_stack": ["Notion", "Gmail", "Canva"]
+  },
+  "backstory": "Building their first SaaS, no engineering background. Evaluates tools based on clarity and simplicity.",
+  "pain_points": ["Confusing onboarding", "Too many settings", "No clear next step"],
+  "evaluation_bias": "Will abandon any product that requires reading a docs page within first 3 minutes.",
+  "success_criteria": {
+    "time_to_value_minutes": 3,
+    "max_clicks_to_core_feature": 4
+  }
+}

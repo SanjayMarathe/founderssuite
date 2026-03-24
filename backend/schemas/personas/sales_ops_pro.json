@@ -1,0 +1,16 @@
+{
+  "persona_id": "sales_ops_pro_01",
+  "name": "Sales Ops Pro",
+  "demographics": {
+    "role": "Sales Operations Lead",
+    "experience_level": "Mid-Senior",
+    "tech_stack": ["Salesforce", "Outreach", "Slack"]
+  },
+  "backstory": "Highly impatient; prioritizes speed over aesthetic. Has 15 minutes to set up a new tool.",
+  "pain_points": ["Manual data entry", "Poor CRM integration"],
+  "evaluation_bias": "Prefers 'scrappy' tools that just work over enterprise-heavy suites.",
+  "success_criteria": {
+    "time_to_value_minutes": 2,
+    "max_clicks_to_core_feature": 5
+  }
+}

@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+browser-use==0.1.40
+langchain-anthropic
+pydantic
+python-dotenv
+websockets
+httpx
