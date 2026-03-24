@@ -125,19 +125,19 @@ async def run_beta_test(
     done = asyncio.Event()
 
     async def screenshot_loop():
-        """Poll the active page for a screenshot every second."""
+        """Poll every second — always send progress, screenshot only when available."""
         while not done.is_set():
+            b64 = None
             try:
-                pw_browser = browser.playwright_browser
-                if pw_browser and pw_browser.contexts:
-                    pages = pw_browser.contexts[0].pages
-                    if pages:
-                        raw = await pages[-1].screenshot(type="jpeg", quality=60)
-                        b64 = base64.b64encode(raw).decode()
-                        if progress_callback:
-                            await progress_callback(current_pct[0], current_step[0], screenshot=b64)
+                session = getattr(agent.browser_context, 'session', None)
+                if session and session.context and session.context.pages:
+                    page = session.context.pages[-1]
+                    raw = await page.screenshot(type="jpeg", quality=60)
+                    b64 = base64.b64encode(raw).decode()
             except Exception:
                 pass
+            if progress_callback:
+                await progress_callback(current_pct[0], current_step[0], screenshot=b64)
             await asyncio.sleep(1)
 
     try:
