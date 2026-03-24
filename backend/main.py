@@ -1,4 +1,5 @@
 import asyncio
+import concurrent.futures
 import json
 import os
 import uuid
@@ -177,31 +178,54 @@ async def start_swarm_test(req: SwarmRequest):
     }
 
     async def run_all():
-        async def run_one(job_id: str, agent_cfg):
-            async def progress_cb(pct: int, step: str, screenshot: str = None):
-                await update_job(job_id, "running", pct, step, screenshot=screenshot)
+        main_loop = asyncio.get_running_loop()
 
-            try:
-                await update_job(job_id, "running", 5, "Starting...")
-                result = await run_beta_test(
-                    url=req.url,
-                    persona_id=agent_cfg.persona_id,
-                    max_steps=req.max_steps,
-                    custom_task=agent_cfg.custom_task,
-                    progress_callback=progress_cb,
-                    headless=not req.show_browsers,
-                )
-                await update_job(job_id, "completed", 100, "Done", result=result.model_dump())
-                swarms[swarm_id]["completed"] += 1
-            except Exception as e:
-                await update_job(job_id, "failed", 0, "Error", error=str(e))
-                swarms[swarm_id]["failed"] += 1
-            finally:
-                total = swarms[swarm_id]["completed"] + swarms[swarm_id]["failed"]
-                if total >= swarms[swarm_id]["total_agents"]:
-                    swarms[swarm_id]["status"] = "completed"
+        def run_one_in_thread(job_id: str, agent_cfg):
+            """Each agent gets its own thread + event loop — no shared Playwright contention."""
+            async def run():
+                async def progress_cb(pct: int, step: str, screenshot: str = None):
+                    # Post back to the main FastAPI event loop for WebSocket sends
+                    asyncio.run_coroutine_threadsafe(
+                        update_job(job_id, "running", pct, step, screenshot=screenshot),
+                        main_loop,
+                    )
 
-        await asyncio.gather(*[run_one(jid, cfg) for jid, cfg in zip(job_ids, req.agents)])
+                try:
+                    asyncio.run_coroutine_threadsafe(
+                        update_job(job_id, "running", 5, "Starting..."),
+                        main_loop,
+                    )
+                    result = await run_beta_test(
+                        url=req.url,
+                        persona_id=agent_cfg.persona_id,
+                        max_steps=req.max_steps,
+                        custom_task=agent_cfg.custom_task,
+                        progress_callback=progress_cb,
+                        headless=not req.show_browsers,
+                    )
+                    asyncio.run_coroutine_threadsafe(
+                        update_job(job_id, "completed", 100, "Done", result=result.model_dump()),
+                        main_loop,
+                    )
+                    swarms[swarm_id]["completed"] += 1
+                except Exception as e:
+                    asyncio.run_coroutine_threadsafe(
+                        update_job(job_id, "failed", 0, "Error", error=str(e)),
+                        main_loop,
+                    )
+                    swarms[swarm_id]["failed"] += 1
+                finally:
+                    total = swarms[swarm_id]["completed"] + swarms[swarm_id]["failed"]
+                    if total >= swarms[swarm_id]["total_agents"]:
+                        swarms[swarm_id]["status"] = "completed"
+
+            asyncio.run(run())
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=len(req.agents)) as executor:
+            await asyncio.gather(*[
+                main_loop.run_in_executor(executor, run_one_in_thread, jid, cfg)
+                for jid, cfg in zip(job_ids, req.agents)
+            ])
 
     asyncio.create_task(run_all())
     return {"swarm_id": swarm_id, "job_ids": job_ids}
