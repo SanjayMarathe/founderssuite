@@ -1,6 +1,7 @@
 import json
 import os
 import asyncio
+import base64
 from pathlib import Path
 from typing import Optional, Callable
 from langchain_anthropic import ChatAnthropic
@@ -97,14 +98,17 @@ async def run_beta_test(
         config=BrowserConfig(headless=headless)
     )
 
+    # Shared state between polling loop and step callback
+    current_pct = [10]
+    current_step = ["Agent initializing..."]
+
     async def on_step(state, output, step_num):
-        if progress_callback:
-            pct = min(10 + int((step_num / max_steps) * 80), 89)
-            action = ""
-            if output and hasattr(output, 'action') and output.action:
-                action = str(output.action[0])[:120] if output.action else ""
-            screenshot = getattr(state, 'screenshot', None)
-            await progress_callback(pct, f"Step {step_num}: {action}", screenshot=screenshot)
+        pct = min(10 + int((step_num / max_steps) * 80), 89)
+        action = ""
+        if output and hasattr(output, 'action') and output.action:
+            action = str(output.action[0])[:120] if output.action else ""
+        current_pct[0] = pct
+        current_step[0] = f"Step {step_num}: {action}"
 
     agent = Agent(
         task=build_task(url, persona, custom_task),
@@ -118,9 +122,30 @@ async def run_beta_test(
     if progress_callback:
         await progress_callback(10, "Agent initializing...")
 
+    done = asyncio.Event()
+
+    async def screenshot_loop():
+        """Poll the active page for a screenshot every second."""
+        while not done.is_set():
+            try:
+                pw_browser = browser.playwright_browser
+                if pw_browser and pw_browser.contexts:
+                    pages = pw_browser.contexts[0].pages
+                    if pages:
+                        raw = await pages[-1].screenshot(type="jpeg", quality=60)
+                        b64 = base64.b64encode(raw).decode()
+                        if progress_callback:
+                            await progress_callback(current_pct[0], current_step[0], screenshot=b64)
+            except Exception:
+                pass
+            await asyncio.sleep(1)
+
     try:
+        poll_task = asyncio.create_task(screenshot_loop())
         history = await agent.run(max_steps=max_steps)
     finally:
+        done.set()
+        poll_task.cancel()
         await browser.close()
 
     if progress_callback:
