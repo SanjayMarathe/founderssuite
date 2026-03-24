@@ -104,7 +104,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
           )}
           {/* Overlay current step */}
           {status?.status === 'running' && log.length > 0 && (
-            <div className="absolute bottom-0 left-0 right-0 bg-gray-950/80 px-2 py-1 text-xs text-yellow-300 truncate font-mono">
+            <div className="absolute bottom-0 left-0 right-0 bg-gray-950/80 px-2 py-1 text-xs text-brand-400 truncate font-mono">
               {log[log.length - 1]}
             </div>
           )}
@@ -120,7 +120,7 @@ export default function AgentCard({ jobId, agentIndex, personaName, color }) {
         >
           {log.length === 0 && <span className="text-gray-600">Waiting to start...</span>}
           {log.map((entry, i) => (
-            <div key={i} className={`${i === log.length - 1 ? 'text-yellow-300' : 'text-gray-500'} truncate`}>
+            <div key={i} className={`${i === log.length - 1 ? 'text-brand-400' : 'text-gray-500'} truncate`}>
               {entry}
             </div>
           ))}

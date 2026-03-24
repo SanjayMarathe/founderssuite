@@ -183,7 +183,7 @@ export default function SwarmTest() {
           <button
             type="submit"
             disabled={loading || !url}
-            className="w-full flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 font-bold py-3 px-6 rounded-lg transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg transition-colors"
           >
             <Zap size={18} />
             {loading ? 'Launching swarm...' : `Launch ${agents.length} Agents`}
