@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getPersonas, startSwarmTest } from '../api/client'
 import AgentCard from './AgentCard'
+import MasterLog from './MasterLog'
 import { Zap, Plus, Trash2, Eye, EyeOff, Play } from 'lucide-react'
 
 const PERSONA_COLORS = [
@@ -215,6 +216,10 @@ export default function SwarmTest() {
               />
             ))}
           </div>
+          <MasterLog
+            jobIds={jobIds}
+            agentLabels={jobIds.map((_, i) => personaName(agents[i]?.persona_id))}
+          />
         </div>
       )}
     </div>
